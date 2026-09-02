@@ -1,0 +1,11 @@
+{
+  "channel": "pilot",
+  "version": "0.6.1-visual",
+  "name": "Guardentra Visual Update 0.6.1",
+  "architecture": "amd64",
+  "encoding": "base64",
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.1-amd64.tar.zst.b64",
+  "sha256": "89c12cd9e33bad12e764d0d8778fe401e150ace2c66260a3e5988880df7496cb",
+  "requires_reboot": true,
+  "notes": "Guardentra icon theme, desktop app icons, login background, and GRUB identity branding."
+}
