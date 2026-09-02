@@ -6,7 +6,7 @@ REPO="${GUARDENTRA_UPDATE_REPO:-Guardentra-OS-Releases}"
 STATE_DIR="${GUARDENTRA_UPDATE_STATE_DIR:-/var/lib/guardentra-update}"
 CACHE_DIR="${GUARDENTRA_UPDATE_CACHE_DIR:-/var/cache/guardentra-update}"
 API="https://api.github.com/repos/${OWNER}/${REPO}/releases/latest"
-UA="Guardentra-Update-Agent/0.6.1"
+UA="Guardentra-Update-Agent/0.6.2"
 ACTION="${1:-check}"
 
 mkdir -p "$STATE_DIR" "$CACHE_DIR"
@@ -20,16 +20,44 @@ require_root() {
 }
 
 fetch_release() {
-  curl --fail --silent --show-error \
+  local output http_code
+  output="$(mktemp)"
+  http_code="$(curl --silent --show-error --location \
     -H "Accept: application/vnd.github+json" \
     -H "User-Agent: ${UA}" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
-    "$API"
+    -o "$output" -w '%{http_code}' "$API" || true)"
+
+  case "$http_code" in
+    200)
+      cat "$output"
+      rm -f "$output"
+      return 0
+      ;;
+    404)
+      rm -f "$output"
+      return 10
+      ;;
+    *)
+      echo "Guardentra update service returned HTTP ${http_code:-unknown}." >&2
+      rm -f "$output"
+      return 11
+      ;;
+  esac
 }
 
 stage_guardentra_update() {
-  local json tag bundle_url bundle_name sha_name sha_url bundle_path sha_path expected actual
-  json="$(fetch_release)"
+  local json tag bundle_url bundle_name sha_name sha_url bundle_path sha_path expected actual rc
+  if ! json="$(fetch_release)"; then
+    rc=$?
+    if [[ "$rc" -eq 10 ]]; then
+      echo "No Guardentra component release has been published yet."
+      return 10
+    fi
+    echo "Unable to check the Guardentra component release channel."
+    return "$rc"
+  fi
+
   tag="$(printf '%s' "$json" | jq -r '.tag_name // empty')"
   bundle_url="$(printf '%s' "$json" | jq -r '.assets[]? | select(.name|test("^guardentra-os-update-.*-amd64\\.tar\\.zst$")) | .browser_download_url' | head -n1)"
   bundle_name="$(printf '%s' "$json" | jq -r '.assets[]? | select(.name|test("^guardentra-os-update-.*-amd64\\.tar\\.zst$")) | .name' | head -n1)"
