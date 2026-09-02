@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Guardentra Update Center
+Comment=Update Guardentra OS and Debian base packages
+Icon=system-software-update
+Exec=konsole -e bash -lc 'echo "Guardentra Update Center"; echo; pkexec /usr/local/sbin/guardentra-update all; code=$?; echo; if [ $code -eq 0 ]; then echo "Update cycle completed."; else echo "Update failed with exit code $code."; fi; echo; read -rp "Press Enter to close..."'
+Terminal=false
+Categories=System;Settings;
+Keywords=update;upgrade;Guardentra;system;
