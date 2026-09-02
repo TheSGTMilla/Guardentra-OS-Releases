@@ -48,8 +48,11 @@ fetch_release() {
 
 stage_guardentra_update() {
   local json tag bundle_url bundle_name sha_name sha_url bundle_path sha_path expected actual rc
-  if ! json="$(fetch_release)"; then
-    rc=$?
+  set +e
+  json="$(fetch_release)"
+  rc=$?
+  set -e
+  if [[ "$rc" -ne 0 ]]; then
     if [[ "$rc" -eq 10 ]]; then
       echo "No Guardentra component release has been published yet."
       return 10
