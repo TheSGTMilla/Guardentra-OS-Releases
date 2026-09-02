@@ -10,11 +10,12 @@ BASE="https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/${PIN
 TMP="$(mktemp -d /tmp/guardentra-updater-bootstrap.XXXXXX)"
 trap 'rm -rf "$TMP"' EXIT
 
-echo "Guardentra OS 0.6 Pilot - Update Center bootstrap 0.6.3"
+echo "Guardentra OS 0.6 Pilot - Update Center bootstrap 0.6.4"
 echo "Checking system clock before package verification..."
 
 # Fresh installs can inherit a stale RTC value. Debian validates signed
-# repository timestamps against UTC, so correct the clock before apt.
+# repository timestamps against UTC, so correct the system clock first,
+# then persist that correct UTC value back to the hardware clock.
 REMOTE_DATE="$(curl -fsSI "${BASE}/guardentra-update-agent.sh" | awk -F': ' 'tolower($1)=="date" {gsub("\r", "", $2); print $2; exit}' || true)"
 if [[ -n "$REMOTE_DATE" ]]; then
   echo "Synchronizing system time from the HTTPS release channel: $REMOTE_DATE"
@@ -24,7 +25,11 @@ else
   exit 12
 fi
 
-timedatectl set-local-rtc 0 --adjust-system-clock >/dev/null 2>&1 || true
+# Do NOT use --adjust-system-clock here; that would overwrite the corrected
+# system time with the stale RTC. Instead, save the corrected system time to RTC.
+if command -v hwclock >/dev/null 2>&1; then
+  hwclock --systohc --utc || true
+fi
 
 echo "Current UTC time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 echo "Installing updater and time-sync prerequisites..."
