@@ -5,12 +5,32 @@ if [[ ${EUID} -ne 0 ]]; then
   exec sudo bash "$0" "$@"
 fi
 
-PIN="5ce90f3c310a9eb7cd156eb670446be845d26267"
+PIN="9f62a76a6b6b5a58b72c2c80672aa4d4f841449f"
 BASE="https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/${PIN}/bootstrap"
 TMP="$(mktemp -d /tmp/guardentra-updater-bootstrap.XXXXXX)"
 trap 'rm -rf "$TMP"' EXIT
 
 echo "Guardentra OS 0.6 Pilot - Update Center bootstrap"
+echo "Checking system clock before package verification..."
+
+# Fresh installs can inherit a Windows/local-time RTC value. Debian validates
+# signed repository timestamps against UTC, so correct the clock before apt.
+REMOTE_DATE="$(curl -fsSI "${BASE}/guardentra-update-agent.sh" | awk -F': ' 'tolower($1)=="date" {gsub("\r", "", $2); print $2; exit}' || true)"
+if [[ -n "$REMOTE_DATE" ]]; then
+  echo "Synchronizing system time from the HTTPS release channel: $REMOTE_DATE"
+  date -u -s "$REMOTE_DATE" >/dev/null || true
+fi
+
+timedatectl set-local-rtc 0 --adjust-system-clock >/dev/null 2>&1 || true
+timedatectl set-ntp true >/dev/null 2>&1 || true
+systemctl restart systemd-timesyncd.service >/dev/null 2>&1 || true
+
+for _ in $(seq 1 15); do
+  [[ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null || true)" == "yes" ]] && break
+  sleep 1
+done
+
+echo "Current UTC time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 echo "Installing updater prerequisites..."
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
