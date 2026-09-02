@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.1-visual",
-  "name": "Guardentra Visual Update 0.6.1",
+  "version": "0.6.2-organization",
+  "name": "Guardentra Organization Foundation 0.6.2",
   "architecture": "amd64",
   "encoding": "base64",
-  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.1-amd64.tar.zst.b64",
-  "sha256": "89c12cd9e33bad12e764d0d8778fe401e150ace2c66260a3e5988880df7496cb",
-  "requires_reboot": true,
-  "notes": "Guardentra icon theme, desktop app icons, login background, and GRUB identity branding."
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.2-amd64.tar.zst.b64",
+  "sha256": "9e2650eefdc15b8f465a0291b001f50a34c6500ddbd44dac2bbb88a163a2e335",
+  "requires_reboot": false,
+  "notes": "Function-first system app names plus the Guardentra Organization client foundation, enrollment, policy sync, and initial endpoint policy enforcement."
 }
