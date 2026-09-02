@@ -5,30 +5,22 @@ if [[ ${EUID} -ne 0 ]]; then
   exec sudo bash "$0" "$@"
 fi
 
-PIN="9f62a76a6b6b5a58b72c2c80672aa4d4f841449f"
+PIN="798384c5b213d4550a44234b7596360c5f3c5780"
 BASE="https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/${PIN}/bootstrap"
 TMP="$(mktemp -d /tmp/guardentra-updater-bootstrap.XXXXXX)"
 trap 'rm -rf "$TMP"' EXIT
 
-echo "Guardentra OS 0.6 Pilot - Update Center bootstrap 0.6.4"
+echo "Guardentra OS 0.6 Pilot - Update Center bootstrap 0.6.5"
 echo "Checking system clock before package verification..."
 
-# Fresh installs can inherit a stale RTC value. Debian validates signed
-# repository timestamps against UTC, so correct the system clock first,
-# then persist that correct UTC value back to the hardware clock.
 REMOTE_DATE="$(curl -fsSI "${BASE}/guardentra-update-agent.sh" | awk -F': ' 'tolower($1)=="date" {gsub("\r", "", $2); print $2; exit}' || true)"
 if [[ -n "$REMOTE_DATE" ]]; then
   echo "Synchronizing system time from the HTTPS release channel: $REMOTE_DATE"
   date -u -s "$REMOTE_DATE" >/dev/null
+  hwclock --systohc --utc >/dev/null 2>&1 || true
 else
   echo "Unable to read trusted HTTPS server time; refusing to run apt with an unverified clock."
   exit 12
-fi
-
-# Do NOT use --adjust-system-clock here; that would overwrite the corrected
-# system time with the stale RTC. Instead, save the corrected system time to RTC.
-if command -v hwclock >/dev/null 2>&1; then
-  hwclock --systohc --utc || true
 fi
 
 echo "Current UTC time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
@@ -48,7 +40,7 @@ done
 echo "Time status after NTP setup:"
 timedatectl status || true
 
-echo "Downloading pinned Guardentra updater payload..."
+echo "Downloading pinned Guardentra OTA updater..."
 curl --fail --location --silent --show-error \
   "${BASE}/guardentra-update-agent.sh" \
   -o "${TMP}/guardentra-update-agent.sh"
@@ -74,7 +66,6 @@ fi
 command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database /usr/share/applications || true
 
 echo
-echo "Guardentra Update Center is installed."
-echo "Daily update checks are enabled when the Guardentra timer is available."
-echo "Use the application menu: Guardentra Update Center"
-echo "Or run: sudo guardentra-update all"
+echo "Guardentra Update Center 0.6.5 is installed."
+echo "Static OTA channel: Guardentra-OS-Releases/channel/stable.json"
+echo "Run now: sudo guardentra-update all"
