@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.2-organization",
-  "name": "Guardentra Organization Foundation 0.6.2",
+  "version": "0.6.3-organization-hotfix",
+  "name": "Guardentra Organization Hotfix 0.6.3",
   "architecture": "amd64",
   "encoding": "base64",
-  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.2-amd64.tar.zst.b64",
-  "sha256": "9e2650eefdc15b8f465a0291b001f50a34c6500ddbd44dac2bbb88a163a2e335",
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.3-amd64.tar.zst.b64",
+  "sha256": "45debf67333d990b07dc86d98d40ef879a84ea843b81fdf33ac275d135f24962",
   "requires_reboot": false,
-  "notes": "Function-first system app names plus the Guardentra Organization client foundation, enrollment, policy sync, and initial endpoint policy enforcement."
+  "notes": "Repairs the Organization app runtime and executable permissions, verifies PyQt6, and keeps Guardentra icons active after appearance changes."
 }
