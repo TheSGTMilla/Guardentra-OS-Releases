@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.3-organization-hotfix",
-  "name": "Guardentra Organization Hotfix 0.6.3",
+  "version": "0.6.4-branding",
+  "name": "Guardentra Boot & Session Branding 0.6.4",
   "architecture": "amd64",
   "encoding": "base64",
-  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.3-amd64.tar.zst.b64",
-  "sha256": "45debf67333d990b07dc86d98d40ef879a84ea843b81fdf33ac275d135f24962",
-  "requires_reboot": false,
-  "notes": "Repairs the Organization app runtime and executable permissions, verifies PyQt6, and keeps Guardentra icons active after appearance changes."
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.4-amd64.tar.zst.b64",
+  "sha256": "56cb17f37b36fd96446e74791b2246d03abb387a2efd35d026121d6bffb79b60",
+  "requires_reboot": true,
+  "notes": "Replaces the Debian 13 Plymouth boot screen and Plasma post-login splash with Guardentra OS branding, refreshes GRUB identity, preserves Guardentra icons, and re-verifies the Organization runtime."
 }
