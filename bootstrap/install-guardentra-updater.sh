@@ -10,31 +10,38 @@ BASE="https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/${PIN
 TMP="$(mktemp -d /tmp/guardentra-updater-bootstrap.XXXXXX)"
 trap 'rm -rf "$TMP"' EXIT
 
-echo "Guardentra OS 0.6 Pilot - Update Center bootstrap"
+echo "Guardentra OS 0.6 Pilot - Update Center bootstrap 0.6.3"
 echo "Checking system clock before package verification..."
 
-# Fresh installs can inherit a Windows/local-time RTC value. Debian validates
-# signed repository timestamps against UTC, so correct the clock before apt.
+# Fresh installs can inherit a stale RTC value. Debian validates signed
+# repository timestamps against UTC, so correct the clock before apt.
 REMOTE_DATE="$(curl -fsSI "${BASE}/guardentra-update-agent.sh" | awk -F': ' 'tolower($1)=="date" {gsub("\r", "", $2); print $2; exit}' || true)"
 if [[ -n "$REMOTE_DATE" ]]; then
   echo "Synchronizing system time from the HTTPS release channel: $REMOTE_DATE"
-  date -u -s "$REMOTE_DATE" >/dev/null || true
+  date -u -s "$REMOTE_DATE" >/dev/null
+else
+  echo "Unable to read trusted HTTPS server time; refusing to run apt with an unverified clock."
+  exit 12
 fi
 
 timedatectl set-local-rtc 0 --adjust-system-clock >/dev/null 2>&1 || true
-timedatectl set-ntp true >/dev/null 2>&1 || true
-systemctl restart systemd-timesyncd.service >/dev/null 2>&1 || true
 
-for _ in $(seq 1 15); do
+echo "Current UTC time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+echo "Installing updater and time-sync prerequisites..."
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y --no-install-recommends curl ca-certificates jq rsync zstd systemd-timesyncd
+
+systemctl enable --now systemd-timesyncd.service || true
+timedatectl set-ntp true >/dev/null 2>&1 || true
+
+for _ in $(seq 1 20); do
   [[ "$(timedatectl show -p NTPSynchronized --value 2>/dev/null || true)" == "yes" ]] && break
   sleep 1
 done
 
-echo "Current UTC time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-echo "Installing updater prerequisites..."
-export DEBIAN_FRONTEND=noninteractive
-apt-get update
-apt-get install -y --no-install-recommends curl ca-certificates jq rsync zstd
+echo "Time status after NTP setup:"
+timedatectl status || true
 
 echo "Downloading pinned Guardentra updater payload..."
 curl --fail --location --silent --show-error \
