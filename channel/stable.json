@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.10-login-branding",
-  "name": "Guardentra Canonical Login Branding 0.6.10",
+  "version": "0.6.11-login-repair",
+  "name": "Guardentra Login + Lock Repair 0.6.11",
   "architecture": "amd64",
   "encoding": "base64",
-  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.10-amd64.tar.zst.b64",
-  "sha256": "dd81390b755c707bc629bc0b13320a345b00e9132e54834305d9532c015230cb",
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.11-amd64.tar.zst.b64",
+  "sha256": "b94939e7b9cc2466fbcd1aba859508686841c372528d1bcf249b9077b752e8ff",
   "requires_reboot": true,
-  "notes": "Standardizes boot and sign-in on the clean Guardentra shield used by the desktop, replaces Debian SDDM branding with the Guardentra sign-in theme, and rebuilds initramfs with the canonical boot mark."
+  "notes": "Compact repair payload to eliminate the previous oversized Base64 corruption. Regenerates the canonical Guardentra boot mark from SVG, forces SDDM away from Debian branding, and applies a Guardentra lock-screen background for existing users."
 }
