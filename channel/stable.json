@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.6-repair",
-  "name": "Guardentra Verified Repair 0.6.6",
+  "version": "0.6.7-repair2",
+  "name": "Guardentra Verified Repair 0.6.7",
   "architecture": "amd64",
   "encoding": "base64",
-  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.6-amd64.tar.zst.b64",
-  "sha256": "eaf2b475ca6f5f9e92e429eeddedd2b2a41deef606d76015d079a47c0128fa7c",
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.7-amd64.tar.zst.b64",
+  "sha256": "15ff4fc5c64097ae2bb8b058283fa4258975b5016cfffb5f230d82493c500b39",
   "requires_reboot": true,
-  "notes": "Forced repair: applies and verifies Guardentra Plymouth logo in initramfs, zero-second hidden GRUB boot, disables Plasma post-login splash for existing users, runs optional application cleanup immediately, preserves Guardentra icons, and verifies the Organization runtime."
+  "notes": "Validated repair payload: installs and verifies Guardentra Plymouth logo, zero-second hidden GRUB boot, disables Plasma post-login splash for existing users, runs optional application cleanup immediately, preserves Guardentra core components, and verifies the Organization runtime."
 }
