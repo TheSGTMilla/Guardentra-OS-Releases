@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.4-branding",
-  "name": "Guardentra Boot & Session Branding 0.6.4",
+  "version": "0.6.5-minimal-boot",
+  "name": "Guardentra Minimal Boot & App Cleanup 0.6.5",
   "architecture": "amd64",
   "encoding": "base64",
-  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.4-amd64.tar.zst.b64",
-  "sha256": "56cb17f37b36fd96446e74791b2246d03abb387a2efd35d026121d6bffb79b60",
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.5-amd64.tar.zst.b64",
+  "sha256": "031deba4a07be101b93da69b5e81419dbb9cc9c9586ce59dda62d580fc99c714",
   "requires_reboot": true,
-  "notes": "Replaces the Debian 13 Plymouth boot screen and Plasma post-login splash with Guardentra OS branding, refreshes GRUB identity, preserves Guardentra icons, and re-verifies the Organization runtime."
+  "notes": "Adds the Guardentra shield to Plymouth, disables the Plasma post-login splash, hides the GRUB menu with zero timeout, preserves Guardentra icons, and removes optional preinstalled applications without autoremove."
 }
