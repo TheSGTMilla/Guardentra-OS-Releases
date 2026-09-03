@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.8-visual-repair",
-  "name": "Guardentra Visual Repair 0.6.8",
+  "version": "0.6.9-polish",
+  "name": "Guardentra Boot & Organization Polish 0.6.9",
   "architecture": "amd64",
   "encoding": "base64",
-  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.8-amd64.tar.zst.b64",
-  "sha256": "753e7b306ced13b51d1249d2ca8e68d4ef4ef6decc99e16dfa47009aad98952b",
+  "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.9-amd64.tar.zst.b64",
+  "sha256": "3a888cf89ba79e1d5219b8555954eb803a1af85f14537c5d9406b4a8d37530f2",
   "requires_reboot": true,
-  "notes": "Cleans the pre-Plymouth boot handoff, suppresses normal-boot kernel console noise, installs a transparent Guardentra shield, keeps GRUB hidden with no loading messages, disables the Plasma login splash, and replaces Organization with theme-independent styling."
+  "notes": "Removes Debian GRUB artwork and pre-kernel loading text from normal boot, keeps early kernel diagnostics off the normal console without disabling validation, installs a clean Guardentra boot mark on a matching navy canvas, and repairs Organization Center theme isolation."
 }
