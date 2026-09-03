@@ -1,11 +1,11 @@
 {
   "channel": "pilot",
-  "version": "0.6.10-lock-branding",
-  "name": "Guardentra Lock + Login Branding 0.6.10",
+  "version": "0.6.10-login-branding",
+  "name": "Guardentra Canonical Login Branding 0.6.10",
   "architecture": "amd64",
   "encoding": "base64",
   "bundle_url": "https://raw.githubusercontent.com/TheSGTMilla/Guardentra-OS-Releases/main/channel/guardentra-os-update-0.6.10-amd64.tar.zst.b64",
-  "sha256": "8c9d928baef2021fcfafbcde1549e6c746f754129a31f9fad4c4abc6f98dde33",
+  "sha256": "dd81390b755c707bc629bc0b13320a345b00e9132e54834305d9532c015230cb",
   "requires_reboot": true,
-  "notes": "Uses the exact desktop Guardentra shield geometry for a high-resolution transparent boot mark, replaces Debian Plasma lock-screen branding with Guardentra wallpaper/look-and-feel, and forces SDDM off Debian's themed greeter onto Guardentra-branded Breeze."
+  "notes": "Standardizes boot and sign-in on the clean Guardentra shield used by the desktop, replaces Debian SDDM branding with the Guardentra sign-in theme, and rebuilds initramfs with the canonical boot mark."
 }
